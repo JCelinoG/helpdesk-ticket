@@ -52,7 +52,6 @@ export const mockApi = {
     //   throw new Error('Failed to load tickets: Network error');
     // }
     
-    console.log('Mock API: Returning tickets', tickets.length);
     return [...tickets];
   },
 
@@ -64,7 +63,6 @@ export const mockApi = {
     // }
     
     const ticket = tickets.find(t => t.id === id);
-    console.log('Mock API: Getting ticket', id, 'found:', !!ticket);
     return ticket || null;
   },
 
@@ -84,8 +82,6 @@ export const mockApi = {
     };
     
     tickets.unshift(newTicket);
-    console.log('Mock API: Created ticket', newTicket.id, newTicket.title);
-    console.log('Total tickets after creation:', tickets.length);
     
     return newTicket;
   },
@@ -93,11 +89,8 @@ export const mockApi = {
   async updateTicket(id: string, data: Partial<Ticket>): Promise<Ticket | null> {
     await this.delay();
     
-    console.log('Mock API: Updating ticket', id, 'with data:', data);
-    
     const index = tickets.findIndex(t => t.id === id);
     if (index === -1) {
-      console.log('Mock API: Ticket not found', id);
       return null;
     }
 
@@ -109,8 +102,6 @@ export const mockApi = {
     
     tickets[index] = updatedTicket;
     
-    console.log('Mock API: Ticket updated successfully', updatedTicket);
-    console.log('Updated ticket in array:', tickets[index]);
     
     return updatedTicket;
   },
@@ -118,13 +109,11 @@ export const mockApi = {
   async deleteTicket(id: string): Promise<boolean> {
     await this.delay();
     
-    console.log('Mock API: Deleting ticket', id);
     
     const initialLength = tickets.length;
     tickets = tickets.filter(t => t.id !== id);
     
     const deleted = tickets.length < initialLength;
-    console.log('Mock API: Deleted?', deleted, 'remaining:', tickets.length);
     
     return deleted;
   },
