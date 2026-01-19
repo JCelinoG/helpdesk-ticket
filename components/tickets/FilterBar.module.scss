@@ -1,0 +1,105 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.filterBar {
+  background: white;
+  border-radius: 12px;
+  padding: $spacing-lg;
+  @include card-shadow;
+  margin-bottom: $spacing-xl;
+}
+
+.search {
+  position: relative;
+  margin-bottom: $spacing-lg;
+
+  &::before {
+    content: '🔍';
+    position: absolute;
+    left: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $secondary-color;
+  }
+}
+
+.searchInput {
+  width: 100%;
+  padding: $spacing-md $spacing-md $spacing-md $spacing-xl * 1.5;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+.clearSearch {
+  position: absolute;
+  right: $spacing-md;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: $secondary-color;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: $text-color;
+  }
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.select {
+  padding: $spacing-md;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+.clearButton {
+  background-color: rgba($secondary-color, 0.1);
+  color: $secondary-color;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid rgba($secondary-color, 0.3);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba($secondary-color, 0.2);
+  }
+}

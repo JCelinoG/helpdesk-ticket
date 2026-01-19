@@ -1,0 +1,77 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.summary {
+  color: $secondary-color;
+  font-size: 0.875rem;
+  margin-bottom: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background-color: rgba($secondary-color, 0.05);
+  border-radius: 6px;
+}
+
+.loading {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-xl * 2;
+  color: $secondary-color;
+}
+
+.error {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-xl * 2;
+  text-align: center;
+  color: $danger-color;
+  background-color: rgba($danger-color, 0.05);
+  border-radius: 12px;
+
+  h3 {
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.retryButton {
+  background-color: $primary-color;
+  color: white;
+  padding: $spacing-sm $spacing-lg;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.emptyState {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-xl * 2;
+  text-align: center;
+  color: $secondary-color;
+  background: white;
+  border-radius: 12px;
+  @include card-shadow;
+
+  h3 {
+    margin-bottom: $spacing-sm;
+    color: $text-color;
+  }
+
+  p {
+    max-width: 400px;
+  }
+}
