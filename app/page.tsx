@@ -4,7 +4,6 @@ import { mockApi } from '@/lib/mock-data';
 import styles from './page.module.scss';
 
 export default async function Home() {
-  // SSR: Fetch tickets on server
   const tickets = await mockApi.getTickets();
 
   return (
@@ -21,7 +20,9 @@ export default async function Home() {
       </div>
 
       <section className={styles.content}>
-        <FilterBar />
+        <div id="filters">
+          <FilterBar />
+        </div>
         <TicketList initialTickets={tickets} />
       </section>
     </main>
