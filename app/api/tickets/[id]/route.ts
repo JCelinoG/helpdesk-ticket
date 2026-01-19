@@ -3,14 +3,16 @@ import { mockApi } from '@/lib/mock-data';
 import { UpdateTicketDTO } from '@/types/ticket';
 
 interface Params {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: Params) {
   try {
-    const ticket = await mockApi.getTicket(params.id);
+    const { id } = await params;
+    const ticket = await mockApi.getTicket(id);
+    
     if (!ticket) {
       return NextResponse.json(
         { error: 'Ticket not found' },
@@ -28,8 +30,10 @@ export async function GET(request: NextRequest, { params }: Params) {
 
 export async function PUT(request: NextRequest, { params }: Params) {
   try {
+    const { id } = await params;
     const body: UpdateTicketDTO = await request.json();
-    const updatedTicket = await mockApi.updateTicket(params.id, body);
+    const updatedTicket = await mockApi.updateTicket(id, body);
+    
     if (!updatedTicket) {
       return NextResponse.json(
         { error: 'Ticket not found' },
@@ -47,7 +51,9 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
 export async function DELETE(request: NextRequest, { params }: Params) {
   try {
-    const deleted = await mockApi.deleteTicket(params.id);
+    const { id } = await params;
+    const deleted = await mockApi.deleteTicket(id);
+    
     if (!deleted) {
       return NextResponse.json(
         { error: 'Ticket not found' },
