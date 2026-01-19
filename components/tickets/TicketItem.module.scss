@@ -1,0 +1,79 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.card {
+  display: block;
+  background: white;
+  border-radius: 8px;
+  padding: $spacing-lg;
+  @include card-shadow;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid $primary-color;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $text-color;
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.status,
+.priority,
+.category {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+}
+
+.category {
+  background-color: $secondary-color;
+}
+
+.description {
+  color: $secondary-color;
+  margin-bottom: $spacing-md;
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: $secondary-color;
+}
+
+.email {
+  font-weight: 500;
+}
+
+.date {
+  opacity: 0.8;
+}

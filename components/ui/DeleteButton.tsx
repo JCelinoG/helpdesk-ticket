@@ -14,6 +14,24 @@ export default function DeleteButton({ ticketId, ticketTitle }: DeleteButtonProp
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
+import styles from './DeleteButton.module.scss';
+
+interface DeleteButtonProps {
+  ticketId: string;
+  ticketTitle: string;
+}
+
+export default function DeleteButton({ ticketId, ticketTitle }: DeleteButtonProps) {
+  const router = useRouter();
+  const toast = useToast();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
@@ -25,11 +43,15 @@ export default function DeleteButton({ ticketId, ticketTitle }: DeleteButtonProp
         throw new Error('Failed to delete ticket');
       }
 
-      router.push('/');
-      router.refresh();
+      toast.success('Ticket deleted successfully!');
+      
+      setTimeout(() => {
+        router.push('/');
+        router.refresh();
+      }, 1000);
     } catch (error) {
       console.error('Error deleting ticket:', error);
-      alert('Failed to delete ticket');
+      toast.error('Failed to delete ticket');
     } finally {
       setIsDeleting(false);
       setShowConfirm(false);

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import ToastContainer from '@/components/ui/ToastContainer';
 import '../styles/globals.scss';
 import styles from './layout.module.scss';
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           </div>
         </nav>
         {children}
+        <ToastContainer />
       </body>
     </html>
   );

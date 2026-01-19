@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import TicketForm from '@/components/tickets/TicketForm';
 import { TicketFormData } from '@/lib/validations/ticket';
 import { Ticket } from '@/types/ticket';
+import { useToast } from '@/hooks/useToast';
 import styles from './page.module.scss';
 
 interface PageProps {
@@ -19,6 +20,7 @@ export default function EditTicketPage({ params }: PageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
+  const toast = useToast();
 
   useEffect(() => {
     fetchTicket();
@@ -38,6 +40,7 @@ export default function EditTicketPage({ params }: PageProps) {
       setTicket(data);
     } catch (error) {
       setError('Failed to load ticket');
+      toast.error('Failed to load ticket');
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -62,10 +65,15 @@ export default function EditTicketPage({ params }: PageProps) {
         throw new Error('Failed to update ticket');
       }
 
-      router.push(`/tickets/${params.id}`);
-      router.refresh();
+      toast.success('Ticket updated successfully!');
+      
+      setTimeout(() => {
+        router.push(`/tickets/${params.id}`);
+        router.refresh();
+      }, 1000);
     } catch (error) {
       console.error('Error updating ticket:', error);
+      toast.error('Failed to update ticket');
       throw error;
     } finally {
       setIsSubmitting(false);
