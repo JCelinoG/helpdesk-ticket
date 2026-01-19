@@ -1,0 +1,71 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  min-height: 100vh;
+
+  @include mobile {
+    padding: $spacing-md;
+  }
+}
+
+.loading {
+  @include flex-center;
+  height: 300px;
+  font-size: 1.25rem;
+  color: $secondary-color;
+}
+
+.error {
+  text-align: center;
+  padding: $spacing-xl * 2;
+
+  h2 {
+    color: $danger-color;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $secondary-color;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.backButton {
+  background-color: $primary-color;
+  color: white;
+  padding: $spacing-md $spacing-xl;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.header {
+  margin-bottom: $spacing-xl;
+
+  h1 {
+    font-size: 2rem;
+    color: $primary-color;
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    color: $secondary-color;
+  }
+}
+
+.content {
+  background: white;
+  border-radius: 12px;
+  padding: $spacing-xl;
+  @include card-shadow;
+}

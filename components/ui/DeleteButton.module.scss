@@ -1,0 +1,94 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.deleteButton {
+  background-color: rgba($danger-color, 0.1);
+  color: $danger-color;
+  padding: $spacing-sm $spacing-lg;
+  border: 1px solid rgba($danger-color, 0.3);
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: rgba($danger-color, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $spacing-md;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: $spacing-xl;
+  max-width: 500px;
+  width: 100%;
+  @include card-shadow;
+
+  h3 {
+    font-size: 1.5rem;
+    color: $text-color;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $secondary-color;
+    line-height: 1.5;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.cancelButton {
+  background-color: white;
+  color: $secondary-color;
+  padding: $spacing-md $spacing-xl;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: $background-color;
+  }
+}
+
+.confirmButton {
+  background-color: $danger-color;
+  color: white;
+  padding: $spacing-md $spacing-xl;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: darken($danger-color, 10%);
+  }
+}

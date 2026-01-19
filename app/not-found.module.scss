@@ -1,0 +1,40 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.main {
+  @include flex-center;
+  min-height: 100vh;
+  padding: $spacing-xl;
+  text-align: center;
+}
+
+.container {
+  max-width: 500px;
+
+  h1 {
+    font-size: 2.5rem;
+    color: $text-color;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $secondary-color;
+    font-size: 1.125rem;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.button {
+  display: inline-block;
+  background-color: $primary-color;
+  color: white;
+  padding: $spacing-md $spacing-xl;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
