@@ -1,6 +1,6 @@
-# 🎫 Sistema de Tickets de Helpdesk
+# 🎫 Sistema de Tickets de Helpdesk - TicketFlow
 
-Uma aplicação CRUD completa para gerenciamento de tickets de suporte, desenvolvida com **Next.js 14**, com foco em **acessibilidade total** e **boas práticas modernas de desenvolvimento**.
+Uma aplicação CRUD completa para gerenciamento de tickets de suporte, desenvolvida com **Next.js 14**, com foco em **acessibilidade** e **boas práticas modernas de desenvolvimento**.
 
 
 ### ✅ Funcionalidades Principais
@@ -79,7 +79,7 @@ Acesse: http://localhost:3000
 
 Por padrão, o projeto espera que o servidor esteja rodando na porta **3000**.
 
-### Se estiver usando outra porta:
+### Configure, definindo a porta:
 
 1. Crie o arquivo `.env.local` na raiz do projeto:
 ```env
