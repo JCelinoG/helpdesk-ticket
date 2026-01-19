@@ -1,21 +1,43 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { mockApi } from '@/lib/mock-data';
 import styles from './page.module.scss';
 import DeleteButton from '@/components/ui/DeleteButton';
 
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default async function TicketDetailPage({ params }: PageProps) {
-  const ticket = await mockApi.getTicket(params.id);
+export default async function TicketDetailPage(props: PageProps) {
+  const params = await props.params;
+  
+  const response = await fetch(`${baseUrl}/api/tickets/${params.id}`, {
+  cache: 'no-store',
+});
+  
+  if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    }
 
-  if (!ticket) {
-    notFound();
+    // erro genérico
+    return (
+      <main className={styles.main}>
+        <div className={styles.error}>
+          <h2>Error Loading Ticket</h2>
+          <p>Failed to load ticket details.</p>
+          <Link href="/">← Back to Tickets</Link>
+        </div>
+      </main>
+    );
   }
+  
+  const ticket = await response.json();
 
   const statusColors = {
     open: '#ef4444',

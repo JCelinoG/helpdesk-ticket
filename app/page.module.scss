@@ -12,54 +12,44 @@
   }
 }
 
-.loading {
-  @include mixins.flex-center;
-  height: 300px;
-  font-size: 1.25rem;
-  color: variables.$secondary-color;
-}
-
-.error {
-  text-align: center;
-  padding: calc(variables.$spacing-xl * 2);
-
-  h2 {
-    color: variables.$danger-color;
-    margin-bottom: variables.$spacing-md;
-  }
-
-  p {
-    color: variables.$secondary-color;
-    margin-bottom: variables.$spacing-xl;
-  }
-}
-
-.backButton {
-  background-color: variables.$primary-color;
-  color: white;
-  padding: variables.$spacing-md variables.$spacing-xl;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: darken(variables.$primary-color, 10%);
-  }
-}
-
 .header {
   margin-bottom: variables.$spacing-xl;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: variables.$primary-color;
     margin-bottom: variables.$spacing-sm;
   }
 
   p {
     color: variables.$secondary-color;
+    font-size: 1.1rem;
+    max-width: 600px;
+    line-height: 1.5;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: variables.$spacing-xl;
+}
+
+.createButton {
+  background-color: variables.$primary-color;
+  color: white;
+  padding: variables.$spacing-md variables.$spacing-xl;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken(variables.$primary-color, 10%);
+    text-decoration: none;
   }
 }
 

@@ -1,0 +1,147 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+
+.filterBar {
+  background: white;
+  border-radius: 12px;
+  padding: v.$spacing-lg;
+  @include m.card-shadow;
+  margin-bottom: v.$spacing-xl;
+}
+
+.search {
+  position: relative;
+  margin-bottom: v.$spacing-lg;
+
+  &::before {
+    content: '🔍';
+    position: absolute;
+    left: v.$spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    color: v.$secondary-color;
+  }
+}
+
+.searchInput {
+  width: 100%;
+  padding: v.$spacing-md v.$spacing-md v.$spacing-md calc(v.$spacing-xl * 1.5);
+  border: 1px solid v.$border-color;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background-color: white;
+  color: v.$text-color;
+
+  &:focus {
+    outline: none;
+    border-color: v.$primary-color;
+    box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.1);
+  }
+}
+
+.clearSearch {
+  position: absolute;
+  right: v.$spacing-md;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: v.$secondary-color;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: v.$text-color;
+  }
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: v.$spacing-md;
+  margin-bottom: v.$spacing-md;
+
+  @include m.mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.select {
+  padding: v.$spacing-md;
+  border: 1px solid v.$border-color;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+  color: v.$text-color;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: v.$primary-color;
+    box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.1);
+  }
+}
+
+.clearButton {
+  background-color: rgba(v.$secondary-color, 0.1);
+  color: v.$secondary-color;
+  padding: v.$spacing-sm v.$spacing-md;
+  border: 1px solid rgba(v.$secondary-color, 0.3);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(v.$secondary-color, 0.2);
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .filterBar {
+    background-color: #2d2d2d;
+    border-color: v.$border-color;
+  }
+
+  .searchInput,
+  .select {
+    background-color: #2d2d2d;
+    color: #f3f4f6;
+    border-color: v.$border-color;
+
+    &:focus {
+      border-color: v.$primary-color;
+      box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.1);
+    }
+  }
+
+  .select option {
+    background-color: #2d2d2d;
+    color: #f3f4f6;
+  }
+
+  .searchInput::placeholder {
+    color: rgba(#f3f4f6, 0.6); 
+  }
+
+  .clearButton {
+    background-color: rgba(v.$secondary-color, 0.2);
+    border-color: rgba(v.$secondary-color, 0.4);
+    color: v.$secondary-color;
+
+    &:hover {
+      background-color: rgba(v.$secondary-color, 0.3);
+    }
+  }
+}

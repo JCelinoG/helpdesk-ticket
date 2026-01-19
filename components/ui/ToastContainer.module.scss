@@ -1,0 +1,20 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.container {
+  position: fixed;
+  top: $spacing-xl;
+  right: $spacing-xl;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $spacing-sm;
+
+  @include mobile {
+    top: $spacing-md;
+    right: $spacing-md;
+    left: $spacing-md;
+    align-items: stretch;
+  }
+}

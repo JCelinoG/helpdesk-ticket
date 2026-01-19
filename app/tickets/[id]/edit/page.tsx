@@ -1,43 +1,51 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import TicketForm from '@/components/tickets/TicketForm';
 import { TicketFormData } from '@/lib/validations/ticket';
 import { Ticket } from '@/types/ticket';
+import { useToast } from '@/hooks/useToast';
+import useTicketStore from '@/stores/useTicketStore';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import styles from './page.module.scss';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function EditTicketPage({ params }: PageProps) {
+export default function EditTicketPage() {
+  const params = useParams();
   const router = useRouter();
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
+  const toast = useToast();
+  const { updateTicketInStore } = useTicketStore();
+  
+  const ticketId = params.id as string;
 
   useEffect(() => {
-    fetchTicket();
-  }, []);
+    if (ticketId) {
+      fetchTicket();
+    }
+  }, [ticketId]);
 
   const fetchTicket = async () => {
     try {
-      const response = await fetch(`/api/tickets/${params.id}`);
+      setIsLoading(true);
+      const response = await fetch(`/api/tickets/${ticketId}`);
+      
       if (!response.ok) {
         if (response.status === 404) {
-          router.push('/');
+          setError('Ticket not found');
           return;
         }
         throw new Error('Failed to fetch ticket');
       }
+      
       const data = await response.json();
       setTicket(data);
     } catch (error) {
       setError('Failed to load ticket');
+      toast.error('Failed to load ticket');
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -47,7 +55,7 @@ export default function EditTicketPage({ params }: PageProps) {
   const handleSubmit = async (data: TicketFormData) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch(`/api/tickets/${params.id}`, {
+      const response = await fetch(`/api/tickets/${ticketId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -62,10 +70,20 @@ export default function EditTicketPage({ params }: PageProps) {
         throw new Error('Failed to update ticket');
       }
 
-      router.push(`/tickets/${params.id}`);
-      router.refresh();
+      const updatedTicket = await response.json();
+      
+      updateTicketInStore(updatedTicket);
+      
+      toast.success('Ticket updated successfully!');
+      
+      setTimeout(() => {
+        router.push(`/tickets/${ticketId}`);
+        router.refresh(); 
+      }, 1000);
+      
     } catch (error) {
       console.error('Error updating ticket:', error);
+      toast.error('Failed to update ticket');
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -75,7 +93,10 @@ export default function EditTicketPage({ params }: PageProps) {
   if (isLoading) {
     return (
       <main className={styles.main}>
-        <div className={styles.loading}>Loading...</div>
+        <div className={styles.loading}>
+          <LoadingSpinner />
+          <p>Loading ticket...</p>
+        </div>
       </main>
     );
   }

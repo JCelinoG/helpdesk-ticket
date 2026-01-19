@@ -1,0 +1,107 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  border-radius: 8px;
+  @include card-shadow;
+  background: white;
+  margin-bottom: $spacing-sm;
+  animation: slideIn 0.3s ease-out;
+  transform: translateX(0);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  max-width: 400px;
+  width: 100%;
+  z-index: 1000;
+
+  &.exit {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: $spacing-md;
+}
+
+.icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: $secondary-color;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: $spacing-md;
+
+  &:hover {
+    color: $text-color;
+  }
+}
+
+// Type-specific styles
+.success {
+  border-left: 4px solid $success-color;
+
+  .icon {
+    color: $success-color;
+  }
+}
+
+.error {
+  border-left: 4px solid $danger-color;
+
+  .icon {
+    color: $danger-color;
+  }
+}
+
+.info {
+  border-left: 4px solid $primary-color;
+
+  .icon {
+    color: $primary-color;
+  }
+}
+
+.warning {
+  border-left: 4px solid $warning-color;
+
+  .icon {
+    color: $warning-color;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

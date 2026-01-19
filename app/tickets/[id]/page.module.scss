@@ -1,14 +1,14 @@
-@import '@/styles/variables';
-@import '@/styles/mixins';
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
 
 .main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: $spacing-xl;
+  padding: v.$spacing-xl;
   min-height: 100vh;
 
-  @include mobile {
-    padding: $spacing-md;
+  @include m.mobile {
+    padding: v.$spacing-md;
   }
 }
 
@@ -16,40 +16,78 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: $spacing-xl;
-  gap: $spacing-lg;
+  margin-bottom: v.$spacing-xl;
+  gap: v.$spacing-lg;
 
-  @include mobile {
+  @include m.mobile {
     flex-direction: column;
   }
 
   h1 {
     font-size: 2rem;
-    color: $text-color;
-    margin-bottom: $spacing-md;
+    color: v.$text-color;
+    margin-bottom: v.$spacing-md;
   }
 }
 
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-sm;
+  gap: v.$spacing-sm;
   align-items: center;
 }
 
 .badge {
-  padding: $spacing-xs $spacing-md;
+  padding: v.$spacing-xs v.$spacing-md;
   border-radius: 4px;
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+// Status colors
+.badge-open {
+  background-color: #FFEBEE;
+  color: #C62828;
+  border-color: #FFCDD2;
+}
+
+.badge-in_progress {
+  background-color: #FFF3E0;
+  color: #EF6C00;
+  border-color: #FFE0B2;
+}
+
+.badge-resolved {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border-color: #C8E6C9;
+}
+
+// Priority colors
+.badge-high {
+  background-color: #FFEBEE;
+  color: #C62828;
+  border-color: #FFCDD2;
+}
+
+.badge-medium {
+  background-color: #FFF3E0;
+  color: #EF6C00;
+  border-color: #FFE0B2;
+}
+
+.badge-low {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border-color: #C8E6C9;
 }
 
 .category {
-  background-color: $secondary-color;
+  background-color: v.$secondary-color;
   color: white;
-  padding: $spacing-xs $spacing-md;
+  padding: v.$spacing-xs v.$spacing-md;
   border-radius: 4px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -57,117 +95,117 @@
 }
 
 .date {
-  color: $secondary-color;
+  color: v.$secondary-color;
   font-size: 0.875rem;
 }
 
 .actions {
   display: flex;
-  gap: $spacing-md;
+  gap: v.$spacing-md;
   flex-shrink: 0;
 
-  @include mobile {
+  @include m.mobile {
     width: 100%;
   }
 }
 
 .editButton {
-  background-color: $primary-color;
+  background-color: v.$primary-color;
   color: white;
-  padding: $spacing-sm $spacing-lg;
+  padding: v.$spacing-sm v.$spacing-lg;
   border-radius: 6px;
   font-weight: 600;
   text-decoration: none;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: darken(v.$primary-color, 10%);
   }
 }
 
 .content {
   background: white;
   border-radius: 12px;
-  padding: $spacing-xl;
-  @include card-shadow;
+  padding: v.$spacing-xl;
+  @include m.card-shadow;
 }
 
 .section {
-  margin-bottom: $spacing-xl;
+  margin-bottom: v.$spacing-xl;
 
   h2 {
     font-size: 1.25rem;
-    color: $text-color;
-    margin-bottom: $spacing-md;
-    padding-bottom: $spacing-sm;
-    border-bottom: 2px solid $border-color;
+    color: v.$text-color;
+    margin-bottom: v.$spacing-md;
+    padding-bottom: v.$spacing-sm;
+    border-bottom: 2px solid v.$border-color;
   }
 }
 
 .description {
   line-height: 1.6;
-  color: $text-color;
+  color: v.$text-color;
   white-space: pre-wrap;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: $spacing-xl;
+  gap: v.$spacing-xl;
 
-  @include mobile {
+  @include m.mobile {
     grid-template-columns: 1fr;
   }
 }
 
 .info {
-  margin-bottom: $spacing-md;
+  margin-bottom: v.$spacing-md;
   display: flex;
   flex-direction: column;
-  gap: $spacing-xs;
+  gap: v.$spacing-xs;
 
   strong {
-    color: $secondary-color;
+    color: v.$secondary-color;
     font-weight: 600;
   }
 
   a {
-    color: $primary-color;
+    color: v.$primary-color;
     word-break: break-all;
   }
 
   span, time {
-    color: $text-color;
+    color: v.$text-color;
   }
 }
 
 .attachment {
   display: inline-block;
-  padding: $spacing-md $spacing-lg;
-  background-color: rgba($primary-color, 0.1);
-  color: $primary-color;
+  padding: v.$spacing-md v.$spacing-lg;
+  background-color: rgba(v.$primary-color, 0.1);
+  color: v.$primary-color;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s;
 
   &:hover {
-    background-color: rgba($primary-color, 0.2);
+    background-color: rgba(v.$primary-color, 0.2);
   }
 }
 
 .backLink {
-  margin-top: $spacing-xl;
-  padding-top: $spacing-lg;
-  border-top: 1px solid $border-color;
+  margin-top: v.$spacing-xl;
+  padding-top: v.$spacing-lg;
+  border-top: 1px solid v.$border-color;
 
   a {
-    color: $secondary-color;
+    color: v.$secondary-color;
     text-decoration: none;
     font-weight: 600;
 
     &:hover {
-      color: $primary-color;
+      color: v.$primary-color;
     }
   }
 }
