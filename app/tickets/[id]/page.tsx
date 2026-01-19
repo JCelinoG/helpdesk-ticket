@@ -5,18 +5,18 @@ import styles from './page.module.scss';
 import DeleteButton from '@/components/ui/DeleteButton';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default async function TicketDetailPage({ params }: PageProps) {
+export default async function TicketDetailPage(props: PageProps) {
+  const params = await props.params;
   const ticket = await mockApi.getTicket(params.id);
 
   if (!ticket) {
     notFound();
   }
-
   const statusColors = {
     open: '#ef4444',
     in_progress: '#f59e0b',
