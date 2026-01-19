@@ -1,13 +1,13 @@
 import { Ticket } from '@/types/ticket';
 import Link from 'next/link';
 import styles from './TicketItem.module.scss';
+import { statusColors, priorityColors } from '@/utils/colors';
 
 interface TicketItemProps {
   ticket: Ticket;
 }
 
 export default function TicketItem({ ticket }: TicketItemProps) {
-  
   const statusLabels = {
     open: 'Open',
     in_progress: 'In Progress',
@@ -31,16 +31,22 @@ export default function TicketItem({ ticket }: TicketItemProps) {
           <h3 className={styles.title}>{ticket.title}</h3>
           <div className={styles.meta}>
             <span
-              className={styles.status}
-              aria-label={`Status: ${statusLabels[ticket.status]}`}
-              title={statusLabels[ticket.status]}
+              className={styles.badge}
+              style={{
+                backgroundColor: statusColors[ticket.status].bg,
+                color: statusColors[ticket.status].text,
+                borderColor: statusColors[ticket.status].border,
+              }}
             >
               {ticket.status.replace('_', ' ')}
             </span>
             <span
-              className={styles.priority}
-              aria-label={`Priority: ${priorityLabels[ticket.priority]}`}
-              title={priorityLabels[ticket.priority]}
+              className={styles.badge}
+              style={{
+                backgroundColor: priorityColors[ticket.priority].bg,
+                color: priorityColors[ticket.priority].text,
+                borderColor: priorityColors[ticket.priority].border,
+              }}
             >
               {ticket.priority}
             </span>
