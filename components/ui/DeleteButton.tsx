@@ -2,22 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './DeleteButton.module.scss';
-
-interface DeleteButtonProps {
-  ticketId: string;
-  ticketTitle: string;
-}
-
-export default function DeleteButton({ ticketId, ticketTitle }: DeleteButtonProps) {
-  const router = useRouter();
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/useToast';
 import styles from './DeleteButton.module.scss';
 
