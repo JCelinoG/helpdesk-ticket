@@ -1,0 +1,129 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.serverError {
+  background-color: rgba($danger-color, 0.1);
+  color: $danger-color;
+  padding: $spacing-md;
+  border-radius: 6px;
+  margin-bottom: $spacing-lg;
+  border-left: 4px solid $danger-color;
+}
+
+.field {
+  margin-bottom: $spacing-lg;
+
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: $danger-color;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($danger-color, 0.1);
+      }
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-lg;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.error {
+  display: block;
+  color: $danger-color;
+  font-size: 0.875rem;
+  margin-top: $spacing-xs;
+}
+
+.hint {
+  display: block;
+  color: $secondary-color;
+  font-size: 0.875rem;
+  margin-top: $spacing-xs;
+  font-style: italic;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $border-color;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.submitButton {
+  background-color: $primary-color;
+  color: white;
+  padding: $spacing-md $spacing-xl;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.cancelButton {
+  background-color: white;
+  color: $secondary-color;
+  padding: $spacing-md $spacing-xl;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: $background-color;
+  }
+}
