@@ -29,7 +29,7 @@ export default function RootLayout({
         <nav className={styles.navbar} aria-label="Main navigation">
           <div className={styles.container}>
             <Link href="/" className={styles.logo}>
-              <span aria-hidden="true">🎫</span> Helpdesk
+              <span aria-hidden="true">🎫</span> TicketFlow
             </Link>
             <Link href="/new" className={styles.createLink}>
               + New Ticket

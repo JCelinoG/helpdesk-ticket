@@ -46,6 +46,8 @@ export default async function Home() {
         </div>
         <TicketList initialTickets={tickets} />
       </section>
+      <p>By: <a href="https://joaocelino.dev/" target="_blank" rel="noopener noreferrer">João Celino Gualberto</a></p>
+
     </main>
   );
 }
