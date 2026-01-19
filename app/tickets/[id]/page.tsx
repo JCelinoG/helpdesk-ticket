@@ -2,10 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.scss';
 import DeleteButton from '@/components/ui/DeleteButton';
-
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || '';
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import { statusColors, priorityColors } from '@/utils/colors';
+import type { TicketStatus, TicketPriority } from '@/types/ticket';
 
 interface PageProps {
   params: Promise<{
@@ -16,40 +14,20 @@ interface PageProps {
 export default async function TicketDetailPage(props: PageProps) {
   const params = await props.params;
   
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || '';
   const response = await fetch(`${baseUrl}/api/tickets/${params.id}`, {
-  cache: 'no-store',
-});
+    cache: 'no-store',
+  });
   
   if (!response.ok) {
-    if (response.status === 404) {
-      notFound();
-    }
-
-    // erro genérico
-    return (
-      <main className={styles.main}>
-        <div className={styles.error}>
-          <h2>Error Loading Ticket</h2>
-          <p>Failed to load ticket details.</p>
-          <Link href="/">← Back to Tickets</Link>
-        </div>
-      </main>
-    );
+    notFound();
   }
   
   const ticket = await response.json();
 
-  const statusColors = {
-    open: '#ef4444',
-    in_progress: '#f59e0b',
-    resolved: '#10b981',
-  };
-
-  const priorityColors = {
-    low: '#10b981',
-    medium: '#f59e0b',
-    high: '#ef4444',
-  };
+  // Type assertions
+  const statusColor = statusColors[ticket.status as TicketStatus];
+  const priorityColor = priorityColors[ticket.priority as TicketPriority];
 
   return (
     <main className={styles.main}>
@@ -57,10 +35,24 @@ export default async function TicketDetailPage(props: PageProps) {
         <div>
           <h1>{ticket.title}</h1>
           <div className={styles.meta}>
-            <span className={styles.badge} style={{ backgroundColor: statusColors[ticket.status] }}>
+            <span 
+              className={styles.badge} 
+              style={{ 
+                backgroundColor: statusColor?.bg || '#E3F2FD',
+                color: statusColor?.text || '#1565C0',
+                borderColor: statusColor?.border || '#BBDEFB'
+              }}
+            >
               {ticket.status.replace('_', ' ')}
             </span>
-            <span className={styles.badge} style={{ backgroundColor: priorityColors[ticket.priority] }}>
+            <span 
+              className={styles.badge} 
+              style={{ 
+                backgroundColor: priorityColor?.bg || '#E8F5E9',
+                color: priorityColor?.text || '#2E7D32',
+                borderColor: priorityColor?.border || '#C8E6C9'
+              }}
+            >
               {ticket.priority}
             </span>
             <span className={styles.category}>{ticket.category}</span>
