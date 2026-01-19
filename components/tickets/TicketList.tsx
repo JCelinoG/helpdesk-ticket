@@ -16,7 +16,6 @@ export default function TicketList({ initialTickets }: TicketListProps) {
   const { tickets, filteredTickets, setTickets } = useTicketStore();
 
   useEffect(() => {
-    // Se não tem dados iniciais, busca da API
     if (!initialTickets) {
       fetchTickets();
     } else {

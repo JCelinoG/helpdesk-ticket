@@ -1,10 +1,31 @@
 import TicketList from '@/components/tickets/TicketList';
 import FilterBar from '@/components/tickets/FilterBar';
-import { mockApi } from '@/lib/mock-data';
 import styles from './page.module.scss';
 
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function Home() {
-  const tickets = await mockApi.getTickets();
+  const response = await fetch(`${baseUrl}/api/tickets`, {
+    cache: 'no-store',
+  });
+  
+  if (!response.ok) {
+    return (
+      <main className={styles.main}>
+        <header className={styles.header}>
+          <h1>Helpdesk Tickets</h1>
+          <p>Manage your support tickets efficiently</p>
+        </header>
+        <div className={styles.content}>
+          <p>Error loading tickets. Please try again.</p>
+        </div>
+      </main>
+    );
+  }
+  
+  const tickets = await response.json();
 
   return (
     <main className={styles.main}>

@@ -5,12 +5,14 @@ import { TicketFormData } from '@/lib/validations/ticket';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useToast } from '@/hooks/useToast';
+import useTicketStore from '@/stores/useTicketStore';
 import styles from './page.module.scss';
 
 export default function NewTicketPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
+  const { refreshTickets } = useTicketStore();
 
   const handleSubmit = async (data: TicketFormData) => {
     setIsSubmitting(true);
@@ -28,6 +30,9 @@ export default function NewTicketPage() {
         throw new Error('Failed to create ticket');
       }
 
+      // Atualizar a lista de tickets no store
+      await refreshTickets();
+      
       toast.success('Ticket created successfully!');
       
       // Redirect to home page on success
@@ -35,6 +40,7 @@ export default function NewTicketPage() {
         router.push('/');
         router.refresh();
       }, 1000);
+      
     } catch (error) {
       console.error('Error creating ticket:', error);
       toast.error('Failed to create ticket. Please try again.');

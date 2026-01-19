@@ -7,6 +7,7 @@ interface TicketItemProps {
 }
 
 export default function TicketItem({ ticket }: TicketItemProps) {
+  
   const statusLabels = {
     open: 'Open',
     in_progress: 'In Progress',

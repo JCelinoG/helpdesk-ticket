@@ -6,6 +6,7 @@ import TicketForm from '@/components/tickets/TicketForm';
 import { TicketFormData } from '@/lib/validations/ticket';
 import { Ticket } from '@/types/ticket';
 import { useToast } from '@/hooks/useToast';
+import useTicketStore from '@/stores/useTicketStore';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import styles from './page.module.scss';
 
@@ -17,6 +18,7 @@ export default function EditTicketPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
   const toast = useToast();
+  const { updateTicketInStore } = useTicketStore();
   
   const ticketId = params.id as string;
 
@@ -68,12 +70,17 @@ export default function EditTicketPage() {
         throw new Error('Failed to update ticket');
       }
 
+      const updatedTicket = await response.json();
+      
+      updateTicketInStore(updatedTicket);
+      
       toast.success('Ticket updated successfully!');
       
       setTimeout(() => {
         router.push(`/tickets/${ticketId}`);
-        router.refresh();
+        router.refresh(); 
       }, 1000);
+      
     } catch (error) {
       console.error('Error updating ticket:', error);
       toast.error('Failed to update ticket');

@@ -12,6 +12,9 @@ interface TicketStore {
   };
   setTickets: (tickets: Ticket[]) => void;
   setFilters: (filters: Partial<TicketStore['filters']>) => void;
+  updateTicketInStore: (updatedTicket: Ticket) => void;
+  removeTicketFromStore: (ticketId: string) => void;
+  refreshTickets: () => Promise<void>;
   applyFilters: () => void;
   clearFilters: () => void;
 }
@@ -43,22 +46,22 @@ const useTicketStore = create<TicketStore>((set, get) => ({
     
     let filtered = [...tickets];
 
-    // Filtro por status
+    // filter by status
     if (filters.status !== 'all') {
       filtered = filtered.filter(ticket => ticket.status === filters.status);
     }
 
-    // Filtro por prioridade
+    // filter by priority
     if (filters.priority !== 'all') {
       filtered = filtered.filter(ticket => ticket.priority === filters.priority);
     }
 
-    // Filtro por categoria
+    // filter by category
     if (filters.category !== 'all') {
       filtered = filtered.filter(ticket => ticket.category === filters.category);
     }
 
-    // Busca por título (case-insensitive)
+    // find by title(case-insensitive)
     if (filters.search.trim()) {
       const searchTerm = filters.search.toLowerCase();
       filtered = filtered.filter(ticket =>
@@ -81,6 +84,51 @@ const useTicketStore = create<TicketStore>((set, get) => ({
       },
       filteredTickets: get().tickets,
     });
+  },
+  
+  updateTicketInStore: (updatedTicket) => {
+    
+    set((state) => {
+      const newTickets = state.tickets.map(ticket => {
+        if (ticket.id === updatedTicket.id) {
+          return { ...ticket, ...updatedTicket };
+        }
+        return ticket;
+      });
+      
+      
+      // return new state with new array
+      return {
+        tickets: newTickets,
+      };
+    });
+    
+    // replace filters after refresh
+    setTimeout(() => {
+      get().applyFilters();
+    }, 0);
+  },
+
+  removeTicketFromStore: (ticketId) => {
+    set((state) => ({
+      tickets: state.tickets.filter(ticket => ticket.id !== ticketId),
+    }));
+    
+    setTimeout(() => {
+      get().applyFilters();
+    }, 0);
+  },
+
+  refreshTickets: async () => {
+    try {
+      const response = await fetch('/api/tickets');
+      if (response.ok) {
+        const tickets = await response.json();
+        set({ tickets, filteredTickets: tickets });
+      }
+    } catch (error) {
+      console.error('Failed to refresh tickets:', error);
+    }
   },
 }));
 

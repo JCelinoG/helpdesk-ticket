@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/useToast';
+import useTicketStore from '@/stores/useTicketStore';
 import styles from './DeleteButton.module.scss';
 
 interface DeleteButtonProps {
@@ -13,6 +14,7 @@ interface DeleteButtonProps {
 export default function DeleteButton({ ticketId, ticketTitle }: DeleteButtonProps) {
   const router = useRouter();
   const toast = useToast();
+  const { removeTicketFromStore } = useTicketStore();
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -36,12 +38,16 @@ export default function DeleteButton({ ticketId, ticketTitle }: DeleteButtonProp
         throw new Error('Failed to delete ticket');
       }
 
+      removeTicketFromStore(ticketId);
+      
       toast.success('Ticket deleted successfully!');
+      
+      router.refresh();
       
       setTimeout(() => {
         router.push('/');
-        router.refresh();
-      }, 1000);
+      }, 300);
+      
     } catch (error) {
       console.error('Error deleting ticket:', error);
       toast.error('Failed to delete ticket');

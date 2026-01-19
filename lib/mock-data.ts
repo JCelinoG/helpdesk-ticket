@@ -37,10 +37,8 @@ let tickets: Ticket[] = [
 ];
 
 const shouldSimulateError = () => {
-  // 10% chance de erro para testes
-  return Math.random() < 0.1;
+  return false; 
 };
-
 
 export const mockApi = {
   async delay(ms: number = 300) {
@@ -50,30 +48,32 @@ export const mockApi = {
   async getTickets(): Promise<Ticket[]> {
     await this.delay();
     
-    if (shouldSimulateError()) {
-      throw new Error('Failed to load tickets: Network error');
-    }
+    // if (shouldSimulateError()) {
+    //   throw new Error('Failed to load tickets: Network error');
+    // }
     
+    console.log('Mock API: Returning tickets', tickets.length);
     return [...tickets];
   },
 
   async getTicket(id: string): Promise<Ticket | null> {
     await this.delay();
     
-    if (shouldSimulateError()) {
-      throw new Error('Failed to load ticket: Server error');
-    }
+    // if (shouldSimulateError()) {
+    //   throw new Error('Failed to load ticket: Server error');
+    // }
     
     const ticket = tickets.find(t => t.id === id);
+    console.log('Mock API: Getting ticket', id, 'found:', !!ticket);
     return ticket || null;
   },
 
   async createTicket(data: Omit<Ticket, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<Ticket> {
     await this.delay();
     
-    if (shouldSimulateError()) {
-      throw new Error('Failed to create ticket: Validation error');
-    }
+    // if (shouldSimulateError()) {
+    //   throw new Error('Failed to create ticket: Validation error');
+    // }
     
     const newTicket: Ticket = {
       ...data,
@@ -82,27 +82,50 @@ export const mockApi = {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
+    
     tickets.unshift(newTicket);
+    console.log('Mock API: Created ticket', newTicket.id, newTicket.title);
+    console.log('Total tickets after creation:', tickets.length);
+    
     return newTicket;
   },
 
   async updateTicket(id: string, data: Partial<Ticket>): Promise<Ticket | null> {
     await this.delay();
+    
+    console.log('Mock API: Updating ticket', id, 'with data:', data);
+    
     const index = tickets.findIndex(t => t.id === id);
-    if (index === -1) return null;
+    if (index === -1) {
+      console.log('Mock API: Ticket not found', id);
+      return null;
+    }
 
-    tickets[index] = {
+    const updatedTicket = {
       ...tickets[index],
       ...data,
       updatedAt: new Date().toISOString(),
     };
-    return tickets[index];
+    
+    tickets[index] = updatedTicket;
+    
+    console.log('Mock API: Ticket updated successfully', updatedTicket);
+    console.log('Updated ticket in array:', tickets[index]);
+    
+    return updatedTicket;
   },
 
   async deleteTicket(id: string): Promise<boolean> {
     await this.delay();
+    
+    console.log('Mock API: Deleting ticket', id);
+    
     const initialLength = tickets.length;
     tickets = tickets.filter(t => t.id !== id);
-    return tickets.length < initialLength;
+    
+    const deleted = tickets.length < initialLength;
+    console.log('Mock API: Deleted?', deleted, 'remaining:', tickets.length);
+    
+    return deleted;
   },
 };
