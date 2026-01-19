@@ -76,6 +76,16 @@ Uma aplicação CRUD completa para gerenciamento de tickets de suporte, desenvol
 4. **Abra o navegador**
 Acesse: http://localhost:3000
 
+## ⚠️ Configuração de Porta
+
+Por padrão, o projeto espera que o servidor esteja rodando na porta **3000**.
+
+### Se estiver usando outra porta:
+
+1. Edite o arquivo `.env.local`:
+```env
+NEXT_PUBLIC_APP_URL=http://localhost:SUA_PORTA_AQUI
+```
 
 
 **🧪 Scripts Disponíveis**
