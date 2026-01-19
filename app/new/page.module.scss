@@ -1,34 +1,71 @@
-@import '@/styles/variables';
-@import '@/styles/mixins';
+@use '@/styles/variables';
+@use '@/styles/mixins';
 
 .main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: $spacing-xl;
+  padding: variables.$spacing-xl;
   min-height: 100vh;
 
-  @include mobile {
-    padding: $spacing-md;
+  @include mixins.mobile {
+    padding: variables.$spacing-md;
+  }
+}
+
+.loading {
+  @include mixins.flex-center;
+  height: 300px;
+  font-size: 1.25rem;
+  color: variables.$secondary-color;
+}
+
+.error {
+  text-align: center;
+  padding: calc(variables.$spacing-xl * 2);
+
+  h2 {
+    color: variables.$danger-color;
+    margin-bottom: variables.$spacing-md;
+  }
+
+  p {
+    color: variables.$secondary-color;
+    margin-bottom: variables.$spacing-xl;
+  }
+}
+
+.backButton {
+  background-color: variables.$primary-color;
+  color: white;
+  padding: variables.$spacing-md variables.$spacing-xl;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken(variables.$primary-color, 10%);
   }
 }
 
 .header {
-  margin-bottom: $spacing-xl;
+  margin-bottom: variables.$spacing-xl;
 
   h1 {
     font-size: 2rem;
-    color: $primary-color;
-    margin-bottom: $spacing-sm;
+    color: variables.$primary-color;
+    margin-bottom: variables.$spacing-sm;
   }
 
   p {
-    color: $secondary-color;
+    color: variables.$secondary-color;
   }
 }
 
 .content {
   background: white;
   border-radius: 12px;
-  padding: $spacing-xl;
-  @include card-shadow;
+  padding: variables.$spacing-xl;
+  @include mixins.card-shadow;
 }

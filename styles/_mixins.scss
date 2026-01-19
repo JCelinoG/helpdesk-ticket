@@ -1,17 +1,19 @@
+@use '@/styles/variables' as v;
+
 @mixin mobile {
-  @media (min-width: $mobile) {
+  @media (min-width: v.$mobile) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (min-width: $tablet) {
+  @media (min-width: v.$tablet) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (min-width: $desktop) {
+  @media (min-width: v.$desktop) {
     @content;
   }
 }
